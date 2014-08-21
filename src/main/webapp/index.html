@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>在线接口文档</title>
+        <script src="http://gmol.99.com/yy/min/libs/require/require.js"></script>
+        <!--<script src="http://115.28.77.1/yy/min/libs/require/require.js"></script>-->
+    </head>
+    <body class="global_background">
+        <script>
+            var staticRootPath = "http://gmol.99.com/yy/libs/";
+//            var staticRootPath = "http://115.28.77.1/yy/min/libs/";
+//            var v = new Date().getTime();
+            var v = 48;
+            require.config({
+                packages: [
+                    {
+                        name: 'home',
+                        location: './module/home',
+                        main: 'home'
+                    },
+                    {
+                        name: 'info',
+                        location: './module/info',
+                        main: 'info'
+                    }
+                ],
+                paths: {
+                    'jquery': staticRootPath + 'jquery',
+                    'text': staticRootPath + 'require/text',
+                    'crypto': staticRootPath + 'crypto',
+                    'jquery.datepicker': staticRootPath + 'jquery/datepicker/jquery-ui-1.10.3.datepicker',
+                    'yy/yy': staticRootPath + 'yy',
+                    'yy/config': staticRootPath + 'yy',
+                    'yy/module': staticRootPath + 'yy',
+                    'yy/button': staticRootPath + 'yy',
+                    'yy/form': staticRootPath + 'yy',
+                    'yy/label': staticRootPath + 'yy',
+                    'yy/list': staticRootPath + 'yy',
+                    'yy/list_item': staticRootPath + 'yy',
+                    'yy/panel': staticRootPath + 'yy'
+                },
+                shim: {
+                    'crypto': {
+                        exports: 'CryptoJS'
+                    },
+                    'jquery.datepicker': {
+                        deps: ['jquery'],
+                        exports: 'jQuery.fn.datepicker',
+                        init: function() {
+                            //加载css
+                            var link = document.createElement("link");
+                            link.type = "text/css";
+                            link.rel = "stylesheet";
+                            link.href = staticRootPath + 'jquery/datepicker/stylesheets/jquery-ui-1.10.3.datepicker.css';
+                            document.getElementsByTagName("head")[0].appendChild(link);
+                        }
+                    }
+                },
+                urlArgs: 'v=' + v
+            });
+            require(['yy/yy', 'yy/module'], function(yy, module) {
+                yy.init({
+                    httpServer: 'http://192.168.181.35/momi/service.io',
+                    webSocketServer: 'ws://192.168.181.35/momi/service.io',
+                    websocket: 'on',
+                    key: '6d6f6d6932303134'
+//
+//                    httpServer: 'http://115.28.77.1/happy/service.io',
+//                    key: '34313032676e6162'
+                }, function() {
+                    //加载css
+                    var cssLink = document.createElement("link");
+                    cssLink.type = "text/css";
+                    cssLink.rel = "stylesheet";
+                    cssLink.href = 'stylesheets/management.css' + '?v=' + v;
+                    document.getElementsByTagName("head")[0].appendChild(cssLink);
+                    var yyLink = document.createElement("link");
+                    yyLink.type = "text/css";
+                    yyLink.rel = "stylesheet";
+                    yyLink.href = staticRootPath + 'yy/stylesheets/yy.css' + '?v=' + v;
+                    document.getElementsByTagName("head")[0].appendChild(yyLink);
+                    //加载模块
+                    module.loadModule('home');
+                });
+            });
+        </script>
+    </body>
+</html>

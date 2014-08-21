@@ -1,0 +1,32 @@
+<div id="home" class="module">
+    <div class="main_header">在线接口文档</div>
+    <div class="h20"></div>
+    <div class="skip content">
+        <div class="skip main_tool">
+            <div id="md5-input-form" class="form md5_input_form">
+                <input type="text" name="inputText"/>
+            </div>
+            <div id="md5-button" class="button basic_button md5_button">md5加密</div>
+            <div id="md5-output-form" class="form md5_output_form">
+                <input type="text" name="outputText"/>
+            </div>
+        </div>
+        <div id="group-list" class="list group_list"></div>
+        <div id="service-list" class="list service_list hide"></div>
+        <div>通信协议约定</div>
+        <div>请求响应结果以json的格式返回。格式为：{"state":"SUCCESS","act":"EXAMPLE",data:{}}</div>
+        <div>act为请求的服务唯一标识</div>
+        <div>state为服务返回业务处理结果的标识,保留SUCCESS，FAILURE，UNLOGIN，INVALID，DENIED，EXCEPTION，可以自定义state的值</div>
+        <div>响应信息可以大致分以下类：</div>
+        <div>1、数据验证错误响应{"state":"INVALID","act":"EXAMPLE",data:{},"error":"某个参数类型错误"}</div>
+        <div>2、非分页查询类操作响应{"state":"SUCCESS","act":"EXAMPLE",data:{“userName":"test","userId":"1"}}</div>
+        <div>文档标记的返回参数将存放在data对象中</div>
+        <div>3、分页查询类操作响应{"state":"SUCCESS","act":"EXAMPLE",data:{"pageIndex":1,"pageSize":2,"pageTotal":10,"pageNum":5,"list":[]}}</div>
+        <div>分页查询类的接口会自动增加接受pageIndex和pageSize两个请求参数</div>
+        <div>分页查询类的接口会自动返回pageIndex,pageSize,pageTotal,pageNum这4个参数，如果pageTotal和pageNum为-1，则表示不提供这个值的计算</div>
+        <div>分页查询类接口定义的响应参数存放在data.list这个对象数组当中</div>
+        <div>4、未登录响应{"state":"UNLOGIN","act":"EXAMPLE",data:{}}</div>
+        <div>5、无访问权限{"state":"DENIED","act":"EXAMPLE",data:{}}</div>
+        <div>6、服务出现异常{"state":"EXCEPTION","act":"EXAMPLE",data:{}}</div>
+    </div>
+</div>
