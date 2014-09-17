@@ -5,15 +5,13 @@
         <meta name="renderer" content="webkit|ie-comp|ie-stand">
         <meta http-equiv="content-type" content="text/html;charset=utf-8">
         <title>在线接口文档</title>
-        <!--<script src="http://gmol.99.com/yy/min/libs/require/require.js"></script>-->
-        <script src="http://www.bigcodebang.com/yy/min/libs/require/require.js"></script>
+        <script src="http://gmol.99.com/yy/min/libs/require/require.js"></script>
     </head>
     <body class="global_background">
         <script>
-//            var v = new Date().getTime();
-//            var staticRootPath = "http://gmol.99.com/yy/libs/";
-            var staticRootPath = "http://www.bigcodebang.com/yy/min/libs/";
-            var v = 50;
+            var v = new Date().getTime();
+            var staticRootPath = "http://gmol.99.com/yy/libs/";
+//            var v = 50;
             require.config({
                 packages: [
                     {
@@ -62,14 +60,23 @@
                 urlArgs: 'v=' + v
             });
             require(['yy/yy', 'yy/module'], function(yy, module) {
+                var httpServer = '${momi.http.server}';
+                var websocketServer = '${momi.websocket.server}';
+                var key = '${momi.server.key}';
+                if (httpServer.indexOf('$') === 0) {
+                    httpServer = 'http://192.168.181.35/momi-server/service.io';
+                }
+                if (websocketServer.indexOf('$') === 0) {
+                    websocketServer = 'ws://192.168.181.35/momi-server/service.io';
+                }
+                if (key.indexOf('$') === 0) {
+                    key = '6d6f6d6932303134';
+                }
                 yy.init({
-//                    httpServer: 'http://192.168.181.35/momi-server/service.io',
-//                    webSocketServer: 'ws://192.168.181.35/momi-server/service.io',
-//                    websocket: 'on',
-//                    key: '6d6f6d6932303134'
-                            //
-                    httpServer: 'http://www.bigcodebang.com/happy/service.io',
-                    key: '34313032676e6162'
+                    httpServer: httpServer,
+                    webSocketServer: websocketServer,
+                    websocket: 'on',
+                    key: key
                 }, function() {
                     //加载css
                     var cssLink = document.createElement("link");

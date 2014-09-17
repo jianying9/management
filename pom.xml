@@ -15,19 +15,26 @@
     </properties>
 
     <build>
+        <finalName>management</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-<!--                    <warSourceExcludes>  
-                        **/*.js,**/*.css
-                    </warSourceExcludes>-->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>*.html</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <!--            <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>yuicompressor-maven-plugin</artifactId>
                 <version>1.4.0</version>
@@ -69,7 +76,48 @@
                     <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
                 </configuration>
             </plugin>-->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.4.9</version>
+                <configuration>
+                    <container>
+                        <containerId>glassfish3x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                    </configuration>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.deployment</groupId>
+                        <artifactId>deployment-client</artifactId>
+                        <version>3.2-b06</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <momi.http.server>http://192.168.181.41/momi-server/service.io</momi.http.server>
+                <momi.websocket.server>ws://192.168.181.41/momi-server/service.io</momi.websocket.server>
+                <momi.server.key>6d6f6d6932303134</momi.server.key>
+            </properties>
+        </profile>
+        <profile>
+            <id>product</id>
+            <properties>
+                <momi.http.server>http://gmol.99.com/momi-server/service.io</momi.http.server>
+                <momi.websocket.server>ws://gmol.99.com/momi-server/service.io</momi.websocket.server>
+                <momi.server.key>6d6f6d6932303134</momi.server.key>
+            </properties>
+        </profile>
+    </profiles>
 </project>
