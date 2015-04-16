@@ -1,0 +1,46 @@
+<!-- BEGIN MAIN CONTENT -->
+<div data-ng-controller="ProjectController" class="margin-top-10">
+    <div class="note note-success note-bordered">
+        <h3>{{project.name}}</h3>
+        <p>{{project.desc}}</p>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">接口列表</span>
+                    </div>
+                    <div class="inputs">
+                        <div class="portlet-input input-inline input-small ">
+                            <div class="input-icon right">
+                                <i class="icon-magnifier"></i>
+                                <input type="text" class="form-control form-control-solid" placeholder="search..." data-ng-model="searchText">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="scroller" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+                        <div class="general-item-list">
+                            <div class="item" data-ng-repeat="service in searchResult">
+                                <div class="item-head">
+                                    <div class="item-details">
+                                        <a href="#/service.html/{{server}}/{{service.route}}" class="item-name primary-link">{{service.routeName}}</a>
+                                        <span class="item-label">{{service.groupName}}</span>
+                                    </div>
+                                </div>
+                                <div class="item-body">{{service.desc}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->

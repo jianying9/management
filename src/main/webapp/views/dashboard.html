@@ -1,0 +1,36 @@
+<!-- BEGIN MAIN CONTENT -->
+<div data-ng-controller="DashboardController" class="margin-top-10">
+    <div class="note note-success note-bordered">
+        <h3>欢迎使用在线接口管理平台</h3>
+        <p>
+            接口管理平台可以方便的查询和测试接口，提供服务端、前端、QA之间的协作的效率。
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs font-green-sharp"></i>
+                        <span class="caption-subject font-green-sharp bold uppercase">项目列表</span>
+                    </div>
+                    <div class="tools">
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="alert alert-block {{project.viewType}} fade in" data-ng-repeat="project in projects">
+                        <h4 class="alert-heading" data-ng-bind="project.name"></h4>
+                        <p>{{project.desc}}</p>
+                        <p>
+                            <a class="btn {{project.btnType}}" href="#/project.html/{{project.name}}">进入</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<!-- BEGIN MAIN JS & CSS -->

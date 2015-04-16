@@ -1,0 +1,144 @@
+<!-- BEGIN MAIN CONTENT -->
+<div data-ng-controller="ServiceController" class="margin-top-10">
+    <div class="note note-success note-bordered">
+        <h3>{{routeName}}</h3>
+        <p>{{server}}</p>
+        <p>{{desc}}</p>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze hide"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">请求参数</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active" data-ng-show="{{session}}">session验证</label>
+                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active"  data-ng-show="{{page}}">分页查询</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th>
+                                        参数名
+                                    </th>
+                                    <th>
+                                        类型
+                                    </th>
+                                    <th>
+                                        必填
+                                    </th>
+                                    <th>
+                                        描述
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="request in requests">
+                                <td class="fit">
+                                    {{request.name}}
+                                </td>
+                                <td>
+                                    {{request.type}}
+                                </td>
+                                <td>
+                                    {{request.must}}
+                                </td>
+                                <td>
+                                    {{request.desc}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze hide"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">响应状态</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th>
+                                        状态
+                                    </th>
+                                    <th>
+                                        描述
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="responseState in responseStates">
+                                <td class="fit">
+                                    {{responseState.state}}
+                                </td>
+                                <td>
+                                    {{responseState.desc}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze hide"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">响应参数</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th>
+                                        参数名
+                                    </th>
+                                    <th>
+                                        类型
+                                    </th>
+                                    <th>
+                                        描述
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="response in responses">
+                                <td class="fit">
+                                    {{response.name}}
+                                </td>
+                                <td>
+                                    {{response.type}}
+                                </td>
+                                <td>
+                                    {{response.desc}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
