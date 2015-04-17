@@ -5,16 +5,16 @@ Rounded Portlets
 ***/
 /*
 .portlet {
-	border-radius: 4px !important;
+        border-radius: 4px !important;
 }
 
 .portlet .portlet-title {
-	border-radius: 4px 4px 0px 0px !important;
+        border-radius: 4px 4px 0px 0px !important;
 }
 
 .portlet .portlet-body,
 .portlet .portlet-body .form-actions  {
-	border-radius: 0px 0px 4px 4px !important;
+        border-radius: 0px 0px 4px 4px !important;
 }
 */
 .page-header {
@@ -23,4 +23,10 @@ Rounded Portlets
 
 .page-content {
     min-height: 800px;
+}
+
+.prettyprint {
+    overflow-x: auto !important;
+    min-height: 200px !important;
+    max-height: 600px !important;
 }

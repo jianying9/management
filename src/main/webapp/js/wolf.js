@@ -222,7 +222,9 @@
             message.send = function (msg, callback) {
                 var that = this;
                 msg.sid = that._server.sid;
-                $.getJSON(that._server.httpUrl+ msg.route + '?callback=?', msg, function (res) {
+                var httpUrl = that._server.httpUrl+ msg.route + '?callback=?';
+                delete msg.route;
+                $.getJSON(httpUrl, msg, function (res) {
                     if (res.sid) {
                         that._server.sid = res.sid;
                     }

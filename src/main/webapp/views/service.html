@@ -138,6 +138,34 @@
             </div>
             <!-- END PORTLET-->
         </div>
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze hide"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">在线测试</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group" data-ng-repeat="request in requests">
+                                <label>
+                                    {{request.name}}
+                                </label>
+                                <input type="text" class="form-control" data-ng-model="testRequest[request.name]">
+                            </div>
+                            <button class="btn green-haze" data-ng-click="test()">submit</button>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <pre class="prettyprint">{{testInfo}}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
     </div>
 </div>
 <!-- END MAIN CONTENT -->
