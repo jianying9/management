@@ -130,24 +130,9 @@ WolfApp.run(['$rootScope', '$state', 'settings', 'wolf', function ($rootScope, $
         //初始化项目列表
         $rootScope.projects = [
             {
-                name: 'wolf-demo',
-                desc: 'wolf提供的示例项目.',
-                httpUrl: 'http://192.168.181.41/wolf-demo'
-            },
-            {
-                name: 'momi',
-                desc: '智能客服',
-                httpUrl: 'http://192.168.181.41/wolf-demo'
-            },
-            {
-                name: '99home',
-                desc: '99家居.',
-                httpUrl: 'http://192.168.181.41/wolf-demo'
-            },
-            {
-                name: 'cloud-wifi',
-                desc: '云wifi管理平台.',
-                httpUrl: 'http://192.168.181.41/wolf-demo'
+                name: '测试工程',
+                desc: '测试websocket工程',
+                httpUrl: 'http://139.224.54.3/test-server/api'
             }
         ];
         //

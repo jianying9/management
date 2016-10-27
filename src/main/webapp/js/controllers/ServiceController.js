@@ -16,7 +16,7 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, wolf) {
         $scope.page = res.data.page;
         $scope.session = res.data.validateSession;
         $scope.requests = res.data.requestConfigs;
-        $scope.responseStates = res.data.responseStates;
+        $scope.responseCodes = res.data.responseCodes;
         $scope.responses = res.data.responseConfigs;
         angular.forEach($scope.requests, function (request) {
             $scope.testRequest[request.name] = '';

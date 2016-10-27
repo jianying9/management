@@ -78,16 +78,22 @@
                                         状态
                                     </th>
                                     <th>
+                                        类型
+                                    </th>
+                                    <th>
                                         描述
                                     </th>
                                 </tr>
                             </thead>
-                            <tr data-ng-repeat="responseState in responseStates">
+                            <tr data-ng-repeat="responseCode in responseCodes">
                                 <td class="fit">
-                                    {{responseState.state}}
+                                    {{responseCode.code}}
                                 </td>
                                 <td>
-                                    {{responseState.desc}}
+                                    {{responseCode.type}}
+                                </td>
+                                <td>
+                                    {{responseCode.desc}}
                                 </td>
                             </tr>
                         </table>
