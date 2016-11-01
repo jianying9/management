@@ -6,7 +6,7 @@
             <span class="badge badge-danger" data-ng-show="hasAsyncResponse">异步响应</span>
             <span class="badge badge-success" data-ng-show="validateSession">登录验证</span>
             <span class="badge badge-info" data-ng-show="page">list类型</span>
-            <span class="badge badge-info" data-ng-hide="page">ogject类型</span>
+            <span class="badge badge-info" data-ng-hide="page">object类型</span>
         </p>
         <p>{{server}}</p>
         <p>{{desc}}</p>
@@ -167,7 +167,7 @@
                                 <label>
                                     {{request.name}}
                                 </label>
-                                <input type="text" class="form-control" data-ng-model="testRequest[request.name]">
+                                <input id="{{request.name}}" name="{{request.name}}" value="{{testRequest[request.name]}}" type="text" class="form-control" data-ng-model="testRequest[request.name]" />
                             </div>
                             <button class="btn green-haze" data-ng-click="test()">submit</button>
                         </div>

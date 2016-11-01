@@ -1,20 +1,21 @@
 /* Wolf App */
 var WolfApp = angular.module("WolfApp", [
-    "ui.router",
-    "ui.bootstrap",
-    "oc.lazyLoad",
-    "ngSanitize"
+    'ui.router',
+    'ui.bootstrap',
+    'oc.lazyLoad',
+    'ngSanitize',
+    'ngCookies'
 ]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-WolfApp.config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
+WolfApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({
             cssFilesInsertBefore: 'ng_load_plugins_before' // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
         });
     }]);
 
 /* Setup global settings */
-WolfApp.factory('settings', ['$rootScope', function ($rootScope) {
+WolfApp.factory('settings', ['$rootScope', function($rootScope) {
         // supported languages
         var settings = {
             layout: {
@@ -28,7 +29,7 @@ WolfApp.factory('settings', ['$rootScope', function ($rootScope) {
         return settings;
     }]);
 
-WolfApp.factory('wolf', ['$rootScope', function ($rootScope) {
+WolfApp.factory('wolf', ['$rootScope', function($rootScope) {
         // supported languages
         var wolf = {
             getMessage: function(id) {
@@ -42,33 +43,33 @@ WolfApp.factory('wolf', ['$rootScope', function ($rootScope) {
     }]);
 
 /* Setup App Main Controller */
-WolfApp.controller('AppController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+WolfApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
 //        Metronic.initComponents(); // init core components
     }]);
 
 /* Setup Layout Part - Header */
-WolfApp.controller('HeaderController', ['$scope', function ($scope) {
-        $scope.$on('$includeContentLoaded', function () {
+WolfApp.controller('HeaderController', ['$scope', function($scope) {
+        $scope.$on('$includeContentLoaded', function() {
 //            Layout.initHeader(); // init header
         });
     }]);
 
 /* Setup Layout Part - Sidebar */
-WolfApp.controller('PageHeadController', ['$scope', function ($scope) {
-        $scope.$on('$includeContentLoaded', function () {
+WolfApp.controller('PageHeadController', ['$scope', function($scope) {
+        $scope.$on('$includeContentLoaded', function() {
 //        Demo.init(); // init theme panel
         });
     }]);
 
 /* Setup Layout Part - Footer */
-WolfApp.controller('FooterController', ['$scope', function ($scope) {
-        $scope.$on('$includeContentLoaded', function () {
+WolfApp.controller('FooterController', ['$scope', function($scope) {
+        $scope.$on('$includeContentLoaded', function() {
 //            Layout.initFooter(); // init footer
         });
     }]);
 
 /* Setup Rounting For All Pages */
-WolfApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         // Redirect any unmatched url
         $urlRouterProvider.otherwise("/dashboard.html");
         $stateProvider.state('dashboard', {
@@ -77,7 +78,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             data: {pageTitle: 'Dashboard', pageSubTitle: '控制台'},
             controller: "DashboardController",
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             name: 'WolfApp',
                             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
@@ -94,7 +95,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             data: {pageTitle: 'Project', pageSubTitle: '项目'},
             controller: "ProjectController",
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             name: 'WolfApp',
                             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
@@ -111,7 +112,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             data: {pageTitle: 'Service', pageSubTitle: '服务'},
             controller: "ServiceController",
             resolve: {
-                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             name: 'WolfApp',
                             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
@@ -125,7 +126,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
     }]);
 
 /* Init global settings and run the app */
-WolfApp.run(['$rootScope', '$state', 'settings', 'wolf', function ($rootScope, $state, settings, wolf) {
+WolfApp.run(['$rootScope', '$state', 'settings', 'wolf', function($rootScope, $state, settings, wolf) {
         $rootScope.$state = $state;
         //初始化项目列表
         $rootScope.projects = [
