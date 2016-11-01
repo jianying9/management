@@ -3,6 +3,7 @@
     <div class="note note-success note-bordered">
         <h3>{{project.name}}</h3>
         <p>{{project.desc}}</p>
+        <p>{{project.httpUrl}}</p>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -30,6 +31,10 @@
                                     <div class="item-details">
                                         <a href="#/service.html/{{server}}/{{service.route}}" class="item-name primary-link">{{service.routeName}}</a>
                                         <span class="item-label">{{service.groupName}}</span>
+                                        <span class="badge badge-danger" data-ng-show="service.hasAsyncResponse">异步响应</span>
+                                        <span class="badge badge-success" data-ng-show="service.validateSession">登录验证</span>
+                                        <span class="badge badge-info" data-ng-show="service.page">list类型</span>
+                                        <span class="badge badge-info" data-ng-hide="service.page">ogject类型</span>
                                     </div>
                                 </div>
                                 <div class="item-body">{{service.desc}}</div>

@@ -133,6 +133,11 @@ WolfApp.run(['$rootScope', '$state', 'settings', 'wolf', function ($rootScope, $
                 name: '测试工程',
                 desc: '测试websocket工程',
                 httpUrl: 'http://139.224.54.3/test-server/api'
+            },
+            {
+                name: '微工程',
+                desc: '微工程服务端api',
+                httpUrl: 'http://139.224.54.3/microproject-server/api'
             }
         ];
         //

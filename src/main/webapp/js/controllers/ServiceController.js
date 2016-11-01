@@ -3,9 +3,10 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, wolf) {
     $scope.server = $stateParams.server;
     $scope.desc = '';
     $scope.page = false;
-    $scope.session = false;
+    $scope.validateSession = false;
+    $scope.hasAsyncResponse = false;
     $scope.requests = [];
-    $scope.responseStates = [];
+    $scope.responseCodes = [];
     $scope.responses = [];
     $scope.testInfo = '';
     $scope.testRequest = {};
@@ -14,7 +15,8 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, wolf) {
     message.send({route: '/wolf/service/info', routeName: $scope.routeName}, function (res) {
         $scope.desc = res.data.desc;
         $scope.page = res.data.page;
-        $scope.session = res.data.validateSession;
+        $scope.validateSession = res.data.validateSession;
+        $scope.hasAsyncResponse = res.data.hasAsyncResponse;
         $scope.requests = res.data.requestConfigs;
         $scope.responseCodes = res.data.responseCodes;
         $scope.responses = res.data.responseConfigs;

@@ -2,8 +2,15 @@
 <div data-ng-controller="ServiceController" class="margin-top-10">
     <div class="note note-success note-bordered">
         <h3>{{routeName}}</h3>
+        <p>
+            <span class="badge badge-danger" data-ng-show="hasAsyncResponse">异步响应</span>
+            <span class="badge badge-success" data-ng-show="validateSession">登录验证</span>
+            <span class="badge badge-info" data-ng-show="page">list类型</span>
+            <span class="badge badge-info" data-ng-hide="page">ogject类型</span>
+        </p>
         <p>{{server}}</p>
         <p>{{desc}}</p>
+
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -13,12 +20,6 @@
                     <div class="caption caption-md">
                         <i class="icon-bar-chart font-green-haze hide"></i>
                         <span class="caption-subject font-green-haze bold uppercase">请求参数</span>
-                    </div>
-                    <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active" data-ng-show="{{session}}">session验证</label>
-                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active"  data-ng-show="{{page}}">分页查询</label>
-                        </div>
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -48,7 +49,7 @@
                                     {{request.type}}
                                 </td>
                                 <td>
-                                    {{request.must}}
+                                    <span class="" data-ng-class="{'label label-danger':request.must}">{{request.must}}</span>
                                 </td>
                                 <td>
                                     {{request.desc}}
@@ -81,6 +82,9 @@
                                         类型
                                     </th>
                                     <th>
+                                        异步响应
+                                    </th>
+                                    <th>
                                         描述
                                     </th>
                                 </tr>
@@ -91,6 +95,9 @@
                                 </td>
                                 <td>
                                     {{responseCode.type}}
+                                </td>
+                                <td>
+                                    <span class="" data-ng-class="{'label label-danger':responseCode.asycn}">{{responseCode.asycn}}</span>
                                 </td>
                                 <td>
                                     {{responseCode.desc}}

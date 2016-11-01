@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.wolf</groupId>
-    <artifactId>management</artifactId>
+    <artifactId>tools</artifactId>
     <version>3.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>management</name>
+    <name>tools</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -15,7 +15,7 @@
     </properties>
 
     <build>
-        <finalName>management</finalName>
+        <finalName>tools</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
