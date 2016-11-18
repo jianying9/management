@@ -14,7 +14,7 @@
     var _context = {
         logLevel: 3,
         version: 1,
-        websocket: 'off'
+        websocket: 'on'
     };
     self.setContext = function (config) {
         for (var name in config) {
@@ -99,13 +99,17 @@
                     }
                 } else {
                     //DENIED状态处理
-                    if (res.act) {
-                        var action = this.actions[res.act];
+                    if (res.route) {
+                        var action = this.actions[res.route];
                         if (action) {
                             var handler;
-                            for (var name in action) {
-                                handler = action[name];
+                            for (var id in action) {
+                                handler = action[id];
+                                if (id.substr(0, 3) === 'auto') {
+                                    delete action[id];
+                                }
                                 handler.callback(res);
+
                             }
                         }
                     } else {
@@ -125,89 +129,104 @@
             var Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
             //初始化websocket
             message._websocket = null;
-            message.send = function (msg) {
+            message._callbackId = 0;
+            message.send = function (route, param, callback) {
                 var that = this;
-                //sid
-                msg.sid = that._server.sid;
+                if (callback) {
+                    that._callbackId++;
+                }
+                that.listen(route, {id: 'auto-' + that._callbackId, callback: callback});
                 //构造json，对特殊字符转义
                 var value;
                 var ch;
                 var chType;
-                var msgText = '{';
-                for (var name in msg) {
-                    value = msg[name];
+                var paramText = '{';
+                for (var name in param) {
+                    value = param[name];
                     chType = Object.prototype.toString.apply(value);
                     if (chType === '[object String]') {
-                        msgText += '"' + name + '":"';
+                        paramText += '"' + name + '":"';
                         for (var index = 0; index < value.length; index++) {
                             ch = value.charAt(index);
                             switch (ch) {
                                 case '"':
-                                    msgText += '\\"';
+                                    paramText += '\\"';
                                     break;
                                 case '\\':
-                                    msgText += '\\\\';
+                                    paramText += '\\\\';
                                     break;
                                 case '\b':
-                                    msgText += '\\b';
+                                    paramText += '\\b';
                                     break;
                                 case '\n':
-                                    msgText += '\\n';
-                                    break;
-                                case '/':
-                                    msgText += '\\/';
+                                    paramText += '\\n';
                                     break;
                                 case '\f':
-                                    msgText += '\\f';
+                                    paramText += '\\f';
                                     break;
                                 case '\r':
-                                    msgText += '\\r';
+                                    paramText += '\\r';
                                     break;
                                 case '\t':
-                                    msgText += '\\t';
+                                    paramText += '\\t';
                                     break;
                                 default:
-                                    msgText += ch;
+                                    paramText += ch;
                             }
                         }
-                        msgText += '",';
+                        paramText += '",';
                     } else if (chType === '[object Number]') {
-                        msgText += '"' + name + '":"' + value + '",';
+                        paramText += '"' + name + '":"' + value + '",';
                     }
                 }
-                msgText = msgText.substr(0, msgText.length - 1);
-                msgText += '}';
+                if(paramText.length > 1) {
+                    paramText = paramText.substr(0, paramText.length - 1);
+                }
+                paramText += '}';
+                var msgText = '{"route":"' + route + '","param":' + paramText + '}';
                 var websocket = that._websocket;
                 if (websocket && websocket.readyState === 1) {
                     websocket.send(msgText);
                     websocket._logger.info(that._server.id + '-' + websocket.id + ':sendMessage:' + msgText);
                 } else {
-                    websocket = new Socket(server.websocketUrl);
+                    var msgUrl = server.websocketUrl + '/' + encodeURIComponent(msgText);
+                    websocket = new Socket(msgUrl);
                     websocket._server = server;
                     websocket._logger = _logger;
                     server.index++;
                     websocket.id = server.index;
+                    websocket._logger.info(that._server.id + '-' + websocket.id + ':sendMessageUrl:' + msgUrl);
                     websocket.onopen = function (event) {
-                        this._logger.info(this._server.id + '-' + this.id + ':connect:' + this._server.websocketUrl);
-                        this.send(msgText);
-                        this._logger.info(this._server.id + '-' + this.id + ':sendMessage:' + msgText);
                     };
                     websocket.onmessage = function (event) {
-                        this._logger.info(this._server.id + '-' + this.id + ':onMessage:' + event.data);
-                        var res = eval('(' + event.data + ')');
-                        if (res.sid) {
-                            this._server.sid = res.sid;
-                            //保持
-                            this._logger.info(this._server.id + '-' + this.id + ':hold:' + res.sid);
-                            this._server.message._websocket = this;
-                        }
-                        try {
-                            that.notify(res);
-                        } catch (e) {
-                            this._logger.error(this._server.id + '-' + this.id + ':error:' + e);
+                        if (event.data === '0') {
+                            //心跳回应
+                            this._logger.info(this._server.id + '-' + this.id + ':onMessage:服务端心跳响应');
+                        } else {
+                            this._logger.info(this._server.id + '-' + this.id + ':onMessage:' + event.data);
+                            var res = eval('(' + event.data + ')');
+                            if (res.sid) {
+                                this._server.sid = res.sid;
+                                //保持
+                                this._logger.info(this._server.id + '-' + this.id + ':hold:' + res.sid);
+                                that._websocket = this;
+                                //启动心跳
+                                that._websocket.heardbeat = setInterval(function () {
+                                    that._websocket.send('1');
+                                }, 5000);
+                            }
+                            try {
+                                that.notify(res);
+                            } catch (e) {
+                                this._logger.error(this._server.id + '-' + this.id + ':error:' + e);
+                            }
                         }
                     };
                     websocket.onclose = function (event) {
+                        if (this.heardbeat) {
+                            clearInterval(this.heardbeat);
+                            this.heardbeat = null;
+                        }
                         this._logger.info(this._server.id + '-' + this.id + ':close:' + this._server);
                     };
                     websocket.onerror = function (event) {
@@ -219,16 +238,15 @@
             message.startComet = function () {
             };
         } else {
-            message.send = function (msg, callback) {
+            message.send = function (route, param, callback) {
                 var that = this;
-                msg.sid = that._server.sid;
-                var httpUrl = that._server.httpUrl+ msg.route + '?callback=?';
-                delete msg.route;
-                $.getJSON(httpUrl, msg, function (res) {
+                param.sid = that._server.sid;
+                var httpUrl = that._server.httpUrl + route + '?callback=?';
+                $.getJSON(httpUrl, param, function (res) {
                     if (res.sid) {
                         that._server.sid = res.sid;
                     }
-                    if(callback) {
+                    if (callback) {
                         callback(res);
                     }
                     that.notify(res);

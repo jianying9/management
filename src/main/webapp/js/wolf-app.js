@@ -133,18 +133,20 @@ WolfApp.run(['$rootScope', '$state', 'settings', 'wolf', function($rootScope, $s
             {
                 name: '测试工程',
                 desc: '测试websocket工程',
-                httpUrl: 'http://139.224.54.3/test-server/api'
+                httpUrl: 'http://127.0.0.1/test-server/api',
+                websocketUrl: 'wss://127.0.0.1/test-server/api'
             },
             {
                 name: '微工程',
                 desc: '微工程服务端api',
-                httpUrl: 'http://139.224.54.3/microproject-server/api'
+                httpUrl: 'http://139.224.54.3/microproject-server/http/api',
+                websocketUrl: 'wss://139.224.54.3/microproject-server/ws/api'
             }
         ];
         //
         var project;
         for (var index = 0, max = $rootScope.projects.length; index < max; index++) {
             project = $rootScope.projects[index];
-            wolf.addServer({id: project.name, httpUrl: project.httpUrl});
+            wolf.addServer({id: project.name, httpUrl: project.httpUrl, websocketUrl: project.websocketUrl});
         }
     }]);

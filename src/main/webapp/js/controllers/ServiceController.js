@@ -12,14 +12,15 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, $cookies
     $scope.testRequest = {};
     //
     var message = wolf.getMessage($scope.server);
-    message.send({route: '/wolf/service/info', routeName: $scope.routeName}, function (res) {
-        $scope.desc = res.data.desc;
-        $scope.page = res.data.page;
-        $scope.validateSession = res.data.validateSession;
-        $scope.hasAsyncResponse = res.data.hasAsyncResponse;
-        $scope.requests = res.data.requestConfigs;
-        $scope.responseCodes = res.data.responseCodes;
-        $scope.responses = res.data.responseConfigs;
+    message.send('/wolf/service/info', {routeName: $scope.routeName}, function (res) {
+        var obj = res.data.object;
+        $scope.desc = obj.desc;
+        $scope.page = obj.page;
+        $scope.validateSession = obj.validateSession;
+        $scope.hasAsyncResponse = obj.hasAsyncResponse;
+        $scope.requests = obj.requestConfigs;
+        $scope.responseCodes = obj.responseCodes;
+        $scope.responses = obj.responseConfigs;
         angular.forEach($scope.requests, function (request) {
             $scope.testRequest[request.name] = '';
             if($cookies[request.name]) {
@@ -30,11 +31,10 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, $cookies
     });
     //
     $scope.test = function () {
-        $scope.testRequest.route = $scope.routeName;
         for(var name in $scope.testRequest) {
             $cookies[name] = $scope.testRequest[name];
         }
-        message.send($scope.testRequest, function (res) {
+        message.send($scope.routeName, $scope.testRequest, function (res) {
             $scope.testInfo = angular.toJson(res, 4);
             $scope.$apply();
         });

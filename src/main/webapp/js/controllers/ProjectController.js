@@ -26,7 +26,7 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
     });
     //
     var message = wolf.getMessage($scope.server);
-    message.send({route: '/wolf/service'}, function (res) {
+    message.send('/wolf/service', {}, function (res) {
         angular.forEach(res.data.list, function (service) {
             service.route = service.routeName.replace(/\//g, '-');
         });
