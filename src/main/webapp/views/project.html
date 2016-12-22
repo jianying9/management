@@ -7,6 +7,19 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
+            <div class="portlet light">
+                <div class="general-item-list">
+                    <div class="item">
+                        <div class="item-head row">
+                            <div class="item-details col-md-2 col-sm-6" data-ng-repeat="routeGroup in routeGroups">
+                                <a href="#" class="item-name primary-link" data-ng-click="changeSearchText(routeGroup)">{{routeGroup}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
             <!-- BEGIN PORTLET-->
             <div class="portlet light">
                 <div class="portlet-title">
