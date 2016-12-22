@@ -74,7 +74,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
         $urlRouterProvider.otherwise("/dashboard.html");
         $stateProvider.state('dashboard', {
             url: "/dashboard.html",
-            templateUrl: "views/dashboard.html",
+            templateUrl: "views/dashboard.html?${timestamp}",
             data: {pageTitle: 'Dashboard', pageSubTitle: '控制台'},
             controller: "DashboardController",
             resolve: {
@@ -83,7 +83,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
                             name: 'WolfApp',
                             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                             files: [
-                                'js/controllers/DashboardController.js'
+                                'js/controllers/DashboardController.js?${timestamp}'
                             ]
                         });
                     }]
@@ -91,7 +91,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
         });
         $stateProvider.state('project', {
             url: "/project.html/:server",
-            templateUrl: "views/project.html",
+            templateUrl: "views/project.html?${timestamp}",
             data: {pageTitle: 'Project', pageSubTitle: '项目'},
             controller: "ProjectController",
             resolve: {
@@ -100,7 +100,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
                             name: 'WolfApp',
                             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                             files: [
-                                'js/controllers/ProjectController.js'
+                                'js/controllers/ProjectController.js?${timestamp}'
                             ]
                         });
                     }]
@@ -108,7 +108,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
         });
         $stateProvider.state('service', {
             url: "/service.html/:server/:route",
-            templateUrl: "views/service.html",
+            templateUrl: "views/service.html?${timestamp}",
             data: {pageTitle: 'Service', pageSubTitle: '服务'},
             controller: "ServiceController",
             resolve: {
@@ -117,7 +117,7 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
                             name: 'WolfApp',
                             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                             files: [
-                                'js/controllers/ServiceController.js'
+                                'js/controllers/ServiceController.js?${timestamp}'
                             ]
                         });
                     }]

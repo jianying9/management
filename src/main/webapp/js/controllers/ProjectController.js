@@ -1,6 +1,9 @@
-WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $scope, wolf) {
+WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $scope, $cookies, wolf) {
     $scope.project = {};
     $scope.searchText = '';
+    if ($cookies['searchText']) {
+        $scope.searchText = $cookies['searchText'];
+    }
     $scope.searchResult = $scope.services = [];
     $scope.server = $stateParams.server;
     var project;
@@ -11,8 +14,8 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
             break;
         }
     }
-    $scope.$watch('searchText', function () {
-        if ($scope.searchText) {
+    var searchTextFilter = function (searchText) {
+        if (searchText) {
             var services = [];
             angular.forEach($scope.services, function (service) {
                 if (service.routeName.indexOf($scope.searchText) >= 0 || service.groupName.indexOf($scope.searchText) >= 0 || service.desc.indexOf($scope.searchText) >= 0) {
@@ -23,6 +26,10 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
         } else {
             $scope.searchResult = $scope.services;
         }
+    };
+    $scope.$watch('searchText', function () {
+        $cookies['searchText'] = $scope.searchText;
+        searchTextFilter($scope.searchText);
     });
     //
     var message = wolf.getMessage($scope.server);
@@ -30,7 +37,8 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
         angular.forEach(res.data.list, function (service) {
             service.route = service.routeName.replace(/\//g, '-');
         });
-        $scope.searchResult = $scope.services = res.data.list;
+        $scope.services = res.data.list;
+        searchTextFilter($scope.searchText);
         $scope.$apply();
     });
 });
