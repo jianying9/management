@@ -37,6 +37,9 @@
                                         必填
                                     </th>
                                     <th>
+                                        丢弃空串
+                                    </th>
+                                    <th>
                                         描述
                                     </th>
                                 </tr>
@@ -50,6 +53,10 @@
                                 </td>
                                 <td>
                                     <span class="" data-ng-class="{'label label-danger':request.required}">{{request.required}}</span>
+                                </td>
+                                <td>
+                                    <span class="" data-ng-show="request.required"></span>
+                                    <span class="" data-ng-hide="request.required">{{request.ignoreEmpty}}</span>
                                 </td>
                                 <td>
                                     {{request.desc}}
