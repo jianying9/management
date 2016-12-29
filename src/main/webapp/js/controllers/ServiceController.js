@@ -23,7 +23,7 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, $cookies
         $scope.responses = obj.responseConfigs;
         angular.forEach($scope.requests, function (request) {
             $scope.testRequest[request.name] = '';
-            if($cookies[request.name]) {
+            if ($cookies[request.name]) {
                 $scope.testRequest[request.name] = $cookies[request.name];
             }
         });
@@ -31,9 +31,23 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, $cookies
     });
     //
     $scope.test = function () {
-        for(var name in $scope.testRequest) {
+        for (var name in $scope.testRequest) {
             $cookies[name] = $scope.testRequest[name];
         }
+        //参数类型格式化
+        var request;
+        var testValue;
+        for (var i = 0; i < $scope.requests.length; i++) {
+            request = $scope.requests[i];
+            testValue = $scope.testRequest[request.name];
+            if (request.type.indexOf('LONG') > -1) {
+                testValue = parseInt(testValue);
+            } else if (request.type.indexOf('DOUBLE') > -1) {
+                testValue = parseFloat(testValue);
+            }
+            $scope.testRequest[request.name] = testValue;
+        }
+        //处理三级请求数据
         message.send($scope.routeName, $scope.testRequest, function (res) {
             $scope.testInfo = angular.toJson(res, 4);
             $scope.$apply();
