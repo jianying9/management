@@ -176,7 +176,7 @@
                         }
                         paramText += '",';
                     } else if (chType === '[object Number]') {
-                        paramText += '"' + name + '":"' + value + '",';
+                        paramText += '"' + name + '":' + value + ',';
                     }
                 }
                 if(paramText.length > 1) {
