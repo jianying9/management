@@ -19,7 +19,7 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
         if (searchText) {
             var services = [];
             angular.forEach($scope.services, function (service) {
-                if (service.routeName.indexOf($scope.searchText) >= 0 || service.groupName.indexOf($scope.searchText) >= 0 || service.desc.indexOf($scope.searchText) >= 0) {
+                if (service.routeName.indexOf($scope.searchText) >= 0 || service.desc.indexOf($scope.searchText) >= 0) {
                     services.push(service);
                 }
             });
