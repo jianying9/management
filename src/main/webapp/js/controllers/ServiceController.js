@@ -18,6 +18,15 @@ WolfApp.controller('ServiceController', function ($stateParams, $scope, $cookies
         $scope.page = obj.page;
         $scope.validateSession = obj.validateSession;
         $scope.hasAsyncResponse = obj.hasAsyncResponse;
+        var compareFunc = function(obj1, obj2) {
+            var result = 0;
+            if(obj1.name && obj2.name) {
+                result = obj1.name.localeCompare(obj2.name);
+            }
+            return result;
+        };
+        obj.requestConfigs.sort(compareFunc);
+        obj.responseConfigs.sort(compareFunc);
         $scope.requests = obj.requestConfigs;
         $scope.responseCodes = obj.responseCodes;
         $scope.responses = obj.responseConfigs;
