@@ -1,6 +1,7 @@
 WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $scope, $cookies, wolf) {
     $scope.project = {};
     $scope.searchText = '';
+    $scope.pushArray = [];
     if ($cookies['searchText']) {
         $scope.searchText = $cookies['searchText'];
     }
@@ -37,11 +38,19 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
     };
     //
     var message = wolf.getMessage($scope.server);
-    message.send('/wolf/service', {}, function (res) {
+    message.send('/wolf/push/list', {}, function (res) {
+        angular.forEach(res.data.pushArray, function (push) {
+            push.route = push.routeName.replace(/\//g, '-');
+        });
+        //保存所有接口
+        $scope.pushArray = res.data.pushArray;
+        $scope.$apply();
+    });
+    message.send('/wolf/service/list', {}, function (res) {
         //计算接口的分类
         var routeGroupMap = {};
         var routeGroup;
-        angular.forEach(res.data.list, function (service) {
+        angular.forEach(res.data.serviceArray, function (service) {
             service.route = service.routeName.replace(/\//g, '-');
             routeGroup = service.routeName.substr(0, service.routeName.lastIndexOf('/'));
             routeGroup = routeGroup.substr(0, routeGroup.lastIndexOf('/'));
@@ -56,7 +65,7 @@ WolfApp.controller('ProjectController', function ($stateParams, $rootScope, $sco
         }
         $scope.routeGroups = routeGroups;
         //保存所有接口
-        $scope.services = res.data.list;
+        $scope.services = res.data.serviceArray;
         searchTextFilter($scope.searchText);
         $scope.$apply();
     });

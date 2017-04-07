@@ -3,16 +3,50 @@
     <div class="note note-success note-bordered">
         <h3>{{routeName}}</h3>
         <p>
-            <span class="badge badge-danger" data-ng-show="hasAsyncResponse">异步响应</span>
+            <span class="badge badge-danger" data-ng-show="hasAsyncResponse">触发推送</span>
             <span class="badge badge-success" data-ng-show="validateSession">登录验证</span>
-            <span class="badge badge-info" data-ng-show="page">list类型</span>
-            <span class="badge badge-info" data-ng-hide="page">object类型</span>
         </p>
         <p>{{server}}</p>
         <p>{{desc}}</p>
 
     </div>
     <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze hide"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">触发推送</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th>
+                                        推送服务
+                                    </th>
+                                    <th>
+                                        描述
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="push in pushArray">
+                                <td class="fit">
+                                    <a href="#/push.html/{{server}}/{{push.route}}" class="item-name primary-link">{{push.routeName}}</a>
+                                </td>
+                                <td>
+                                    {{push.desc}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN PORTLET-->
             <div class="portlet light ">
@@ -89,9 +123,6 @@
                                         类型
                                     </th>
                                     <th>
-                                        异步响应
-                                    </th>
-                                    <th>
                                         描述
                                     </th>
                                 </tr>
@@ -102,9 +133,6 @@
                                 </td>
                                 <td>
                                     {{responseCode.type}}
-                                </td>
-                                <td>
-                                    <span class="" data-ng-class="{'label label-danger':responseCode.async}">{{responseCode.async}}</span>
                                 </td>
                                 <td>
                                     {{responseCode.desc}}
@@ -169,16 +197,13 @@
                 </div>
                 <div class="portlet-body">
                     <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="form-group" data-ng-repeat="request in requests">
-                                <label>
-                                    {{request.name}}
-                                </label>
-                                <input id="{{request.name}}" name="{{request.name}}" value="{{testRequest[request.name]}}" type="text" class="form-control" data-ng-model="testRequest[request.name]" />
-                            </div>
+                        <div class="col-md-12 col-sm-12 help-block">
+                            <textarea class="form-control"  rows="6" placeholder="请求发送的json字符串" data-ng-model="testJson"></textarea>
+                        </div>
+                        <div class="col-md-12 col-sm-12 help-block">
                             <button class="btn green-haze" data-ng-click="test()">submit</button>
                         </div>
-                        <div class="col-md-8 col-sm-12">
+                        <div class="col-md-12 col-sm-12 help-block">
                             <pre class="prettyprint">{{testInfo}}</pre>
                         </div>
                     </div>

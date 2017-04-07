@@ -1,0 +1,74 @@
+<!-- BEGIN MAIN CONTENT -->
+<div data-ng-controller="PushController" class="margin-top-10">
+    <div class="note note-success note-bordered">
+        <h3>{{routeName}}</h3>
+        <p>{{server}}</p>
+        <p>{{desc}}</p>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">触发服务列表</span>
+                    </div>
+                </div>
+                <div class="general-item-list">
+                    <div class="item">
+                        <div class="item-head row">
+                            <div class="item-details col-md-3 col-sm-4" data-ng-repeat="service in serviceArray">
+                                <a href="#/service.html/{{server}}/{{service.route}}" class="item-name primary-link">{{service.routeName}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-green-haze hide"></i>
+                        <span class="caption-subject font-green-haze bold uppercase">响应参数</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th>
+                                        参数名
+                                    </th>
+                                    <th>
+                                        类型
+                                    </th>
+                                    <th>
+                                        描述
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="response in responses">
+                                <td class="fit">
+                                    {{response.name}}
+                                </td>
+                                <td>
+                                    {{response.type}}
+                                </td>
+                                <td>
+                                    {{response.desc}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->

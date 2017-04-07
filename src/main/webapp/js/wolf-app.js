@@ -123,6 +123,23 @@ WolfApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
                     }]
             }
         });
+        $stateProvider.state('push', {
+            url: "/push.html/:server/:route",
+            templateUrl: "views/push.html?${timestamp}",
+            data: {pageTitle: 'Push', pageSubTitle: '推送服务'},
+            controller: "PushController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            name: 'WolfApp',
+                            insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                            files: [
+                                'js/controllers/PushController.js?${timestamp}'
+                            ]
+                        });
+                    }]
+            }
+        });
     }]);
 
 /* Init global settings and run the app */
@@ -131,14 +148,14 @@ WolfApp.run(['$rootScope', '$state', 'settings', 'wolf', function($rootScope, $s
         //初始化项目列表
         $rootScope.projects = [
             {
-                name: '测试工程',
-                desc: '测试websocket工程',
+                name: '测试项目',
+                desc: '测试websocket项目',
                 httpUrl: 'http://127.0.0.1/test-server/api',
                 websocketUrl: 'wss://127.0.0.1/test-server/api'
             },
             {
-                name: '微工程',
-                desc: '微工程服务端api',
+                name: '微项目',
+                desc: '微项目服务端api',
                 httpUrl: 'http://139.224.54.3/microproject-server/http/api',
                 websocketUrl: 'wss://139.224.54.3/microproject-server/ws/api'
             }
