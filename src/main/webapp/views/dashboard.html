@@ -29,6 +29,102 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs font-green-sharp"></i>
+                        <span class="caption-subject font-green-sharp bold uppercase">websocket访问文档</span>
+                    </div>
+                    <div class="tools">
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <h2>请求json</h2>
+                    <pre class="prettyprint lang-js">{{requestJson}}</pre>
+                    <h2>同步响应json</h2>
+                    <pre class="prettyprint lang-js">{{responseJson}}</pre>
+                    <h2>推送响应json</h2>
+                    <pre class="prettyprint lang-js">{{pushJson}}</pre>
+                    <h2>访问示例</h2>
+                    <pre class="prettyprint lang-js">
+//假设要访问127.0.0.1:80/app的route=/user/info的服务,服务请求参数为userId=10001
+//1、创建连接的同时马上访问route=/user/info
+var url = 'wss:127.0.0.1:80/app/ws/api/{"route":"/user/info", "param":{"userId":10001}}';
+var websocket = new Socket(url);
+websocket.onmessage = functon(event) {
+//返回数据处理
+}
+//2、先创建连接,在发送消息
+var url = 'wss:127.0.0.1:80/app/ws/api';
+var websocket = new Socket(url);
+websocket.onmessage = functon(event) {
+//返回数据处理
+}
+websocket.send('{"route":"/user/info", "param":{"userId":10001}}');
+//3、每15秒发一次心跳包'1',服务端会响应'0'。如果心跳终端,服务端会强制断开连接
+websocket.send('1');
+                    </pre>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs font-green-sharp"></i>
+                        <span class="caption-subject font-green-sharp bold uppercase">http访问文档</span>
+                    </div>
+                    <div class="tools">
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <h2>请求json</h2>
+                    <pre class="prettyprint lang-js">{{httpRequestJson}}</pre>
+                    <h2>同步响应json</h2>
+                    <pre class="prettyprint lang-js">{{responseJson}}</pre>
+                    <h2>推送响应json</h2>
+                    <pre class="prettyprint lang-js">{{pushJson}}</pre>
+                    <h2>访问示例</h2>
+                    <pre class="prettyprint lang-js">
+//假设要访问127.0.0.1:80/app的route=/user/info的服务,服务请求参数为userId=10001
+//1、构造url访问route=/user/info
+var url = 'https:127.0.0.1:80/app/http/api/user/info?param={"route":"/user/info", "param":{"userId":10001}}';
+$.getJSON(url, {}, function(res) {
+//返回结果处理
+});
+//2、jsonp访问,增加callback参数
+var url = 'https:127.0.0.1:80/app/http/api/user/info?sid=10001&callback=callback0001&param={"userId":10001}';
+$.getJSON(url, {}, function(res) {
+//返回结果处理
+});
+//3、开启服务端长连接推送
+var url = 'https:127.0.0.1:80/app/http/api;
+var push = {
+    'httpUrl': url,
+    'sid': '10001',
+    getPushMessage: function () {
+        var that = this;
+        $.getJSON(that.httpUrl + '?callback=?', {wolf: 'PUSH', sid: that.sid}, function (res) {
+            if (res.wolf &&res.wolf === 'PUSH_TIMEOUT') {
+                //服务端长连接超时,重新连接
+                that.getPushMessage();
+             } else {
+                //处理服务端推送结果res
+                //处理成功后重新开启一个新的服务端长连接
+                that.getPushMessage();
+             }
+        });
+    }
+};
+//执行
+push.getPushMessage();
+                    </pre>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- END MAIN CONTENT -->

@@ -198,7 +198,7 @@
                 <div class="portlet-body">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 help-block">
-                            <textarea class="form-control"  rows="6" placeholder="请求发送的json字符串" data-ng-model="testJson"></textarea>
+                            <textarea class="form-control"  rows="{{testJsonLineNum}}" placeholder="请求发送的json字符串" data-ng-model="testJson"></textarea>
                         </div>
                         <div class="col-md-12 col-sm-12 help-block">
                             <button class="btn green-haze" data-ng-click="test()">submit</button>
